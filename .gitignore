@@ -1,0 +1,11 @@
+# Ignorar dependencias del Backend
+Backend/node_modules/
+
+# Ignorar dependencias del Frontend
+Frontend/frontend-matriculas/node_modules/
+Frontend/frontend-matriculas/.angular/
+
+# Archivos del sistema y del editor
+.vscode/
+.DS_Store
+Thumbs.db

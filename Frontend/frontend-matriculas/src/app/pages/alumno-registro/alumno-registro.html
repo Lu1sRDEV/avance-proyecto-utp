@@ -1,0 +1,130 @@
+<div class="container-fluid mt-4 px-4"> <!-- Mismo contenedor fluido para mantener alineación estructural -->
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6"> <!-- Ajuste de ancho óptimo para pantallas de escritorio -->
+            <div class="card shadow-sm border-0">
+
+                <!-- Encabezado de la Tarjeta (Idéntico al padrón) -->
+                <div class="card-header bg-dark text-white py-3">
+                    <h3 class="mb-0 fs-4 fw-bold">Registro de Nueva Matrícula</h3>
+                </div>
+
+                <!-- Cuerpo de la Tarjeta -->
+                <div class="card-body p-4">
+
+                    @if (mensajeError()) {
+                    <div class="alert alert-danger d-flex align-items-center gap-2 mb-4 border-0 shadow-sm"
+                        role="alert">
+                        <i class="bi bi-exclamation-triangle-fill fs-5"></i>
+                        <div>{{ mensajeError() }}</div>
+                    </div>
+                    }
+
+                    <form #matriculaForm="ngForm" (ngSubmit)="guardar()" novalidate>
+
+                        <!-- CÓDIGO DE ESTUDIANTE -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-secondary small text-uppercase">Código de
+                                Estudiante</label>
+                            <input type="text" class="form-control" name="alu_codigo" [(ngModel)]="alumno().alu_codigo"
+                                #alu_codigo="ngModel" required placeholder="Ej: ALU2026001"
+                                [class.is-invalid]="alu_codigo.invalid && alu_codigo.touched"
+                                [class.is-valid]="alu_codigo.valid && alu_codigo.touched">
+                            @if (alu_codigo.invalid && alu_codigo.touched) {
+                            <div class="invalid-feedback">El código de estudiante es obligatorio.</div>
+                            }
+                        </div>
+
+                        <!-- DNI -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-secondary small text-uppercase">DNI</label>
+                            <input type="text" class="form-control " name="alu_dni" [(ngModel)]="alumno().alu_dni"
+                                #alu_dni="ngModel" required pattern="^[0-9]{8}$" placeholder="8 dígitos numéricos"
+                                maxlength="8" [class.is-invalid]="alu_dni.invalid && alu_dni.touched"
+                                [class.is-valid]="alu_dni.valid && alu_dni.touched">
+                            @if (alu_dni.invalid && alu_dni.touched) {
+                            <div class="invalid-feedback">El DNI debe tener exactamente 8 números.</div>
+                            }
+                        </div>
+
+                        <!-- NOMBRES -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-secondary small text-uppercase">Nombres
+                                Completos</label>
+                            <input type="text" class="form-control" name="alu_nombres"
+                                [(ngModel)]="alumno().alu_nombres" #alu_nombres="ngModel" required minlength="2"
+                                placeholder="Ingrese nombres"
+                                [class.is-invalid]="alu_nombres.invalid && alu_nombres.touched"
+                                [class.is-valid]="alu_nombres.valid && alu_nombres.touched">
+                            @if (alu_nombres.invalid && alu_nombres.touched) {
+                            <div class="invalid-feedback">Los nombres son obligatorios (mínimo 2 caracteres).</div>
+                            }
+                        </div>
+
+                        <!-- APELLIDOS -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-secondary small text-uppercase">Apellidos
+                                Completos</label>
+                            <input type="text" class="form-control" name="alu_apellidos"
+                                [(ngModel)]="alumno().alu_apellidos" #alu_apellidos="ngModel" required minlength="2"
+                                placeholder="Ingrese apellidos"
+                                [class.is-invalid]="alu_apellidos.invalid && alu_apellidos.touched"
+                                [class.is-valid]="alu_apellidos.valid && alu_apellidos.touched">
+                            @if (alu_apellidos.invalid && alu_apellidos.touched) {
+                            <div class="invalid-feedback">Los apellidos son obligatorios (mínimo 2 caracteres).</div>
+                            }
+                        </div>
+
+                        <!-- CARRERA ACADÉMICA (Sincronizada con las opciones de la tabla) -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-secondary small text-uppercase">Carrera de
+                                Destino</label>
+                            <select class="form-select" name="alu_carrera" [(ngModel)]="alumno().alu_carrera"
+                                #alu_carrera="ngModel" required
+                                [class.is-invalid]="alu_carrera.invalid && alu_carrera.touched"
+                                [class.is-valid]="alu_carrera.valid && alu_carrera.touched">
+                                <option value="" disabled selected>Seleccione una carrera...</option>
+                                <option value="Computación e Informática">Computación e Informática</option>
+                                <option value="Enfermería Técnica">Enfermería Técnica</option>
+                                <option value="Diseño Gráfico">Diseño Gráfico</option>
+                                <option value="Administración de Empresas">Administración de Empresas</option>
+                                <option value="Gastronomía y Arte Culinario">Gastronomía y Arte Culinario</option>
+                                <option value="Mecánica Automotriz">Mecánica Automotriz</option>
+                                <option value="Contabilidad">Contabilidad</option>
+                            </select>
+                            @if (alu_carrera.invalid && alu_carrera.touched) {
+                            <div class="invalid-feedback">Debe seleccionar una carrera oficial del instituto.</div>
+                            }
+                        </div>
+
+                        <!-- CORREO ELECTRÓNICO -->
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold text-secondary small text-uppercase">Correo
+                                Electrónico</label>
+                            <input type="email" class="form-control" name="alu_correo" [(ngModel)]="alumno().alu_correo"
+                                #alu_correo="ngModel" required email placeholder="ejemplo@instituto.edu.pe"
+                                [class.is-invalid]="alu_correo.invalid && alu_correo.touched"
+                                [class.is-valid]="alu_correo.valid && alu_correo.touched">
+                            @if (alu_correo.invalid && alu_correo.touched) {
+                            <div class="invalid-feedback">Ingrese un correo electrónico institucional válido.</div>
+                            }
+                        </div>
+
+                        <!-- BOTONES DE ACCIÓN (Estilizados con iconos y clases de Bootstrap) -->
+                        <div class="d-flex justify-content-end gap-2 border-top pt-3 mt-4">
+                            <button type="button" class="btn btn-outline-secondary d-flex align-items-center gap-2"
+                                (click)="cancelar()">
+                                <i class="bi bi-arrow-left-short fs-5"></i>
+                                <span>Volver al Padrón</span>
+                            </button>
+                            <button type="submit" class="btn btn-success d-flex align-items-center gap-2 px-4"
+                                [disabled]="matriculaForm.invalid">
+                                <i class="bi bi-cloud-arrow-up-fill"></i>
+                                <span>Finalizar Matrícula</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
